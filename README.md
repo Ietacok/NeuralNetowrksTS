@@ -5,7 +5,7 @@ this module can consume a big chunk of your RAM.
 
 The first version supports the most basic functions. One of them is backpropagation 
 which works quite different from the other ones as it doesn't look far back, instead 
-it asks it's neighbours (what's their value) and thenthe neuron adjusts it's weight 
+it asks it's neighbours (what's their value) and then the neuron adjusts it's weight 
 based on that information. 
 
 In theory this neural network should fix itself starting from the output "layer" to the new one.
