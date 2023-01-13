@@ -171,12 +171,14 @@ class NeuralNetwork {
        Neuron.BackIterations += 1
        for (let i = 0;i < Neuron.IsConnectedBy.length;i++)
        {
-         let ConnectedNeuron:NeuronClass =  Neuron.IsConnectedBy[i].NeuronA
+         let ConnectedNeuron:NeuronClass = Neuron.IsConnectedBy[i].NeuronA
          NextNeurons[NextNeurons.length] = ConnectedNeuron
        }
       }
       CurrentNeurons = NextNeurons
       this.NeuralNetworkSettings.BackIterations += 1
+             
+      local OPT_len_Value = 1 / TrainingExamples.length //makes the script faster (aka division sucks)
       while (CurrentNeurons.length > 0)
       { 
        NextNeurons = new Array()
@@ -190,7 +192,7 @@ class NeuralNetwork {
           Neuron.errorMarginValue = 0
           for (let i = 0;i < Neuron.Connections.length;i++)
           {
-            Neuron.errorMarginValue += Neuron.Connections[i].NeuronB.errorMarginValue *  Neuron.Connections[i].Weight
+            Neuron.errorMarginValue += Neuron.Connections[i].NeuronB.errorMarginValue * Neuron.Connections[i].Weight
           }
          }
          if (Neuron.SubIterations == Neuron.MaxSubiterations)
@@ -200,8 +202,8 @@ class NeuralNetwork {
          Neuron.SubIterations += 1
          for (let i = 0;i < Neuron.Connections.length;i++)
          {
-           Neuron.Connections[i].NextIncrease += Neuron.Connections[i].Weight * Neuron.Connections[i].NeuronB.errorMarginValue * this.NeuralNetworkSettings.LearnFactor / TrainingExamples.length
-           Neuron.Bias += Neuron.Connections[i].NeuronB.errorMarginValue * this.NeuralNetworkSettings.LearnFactor / TrainingExamples.length
+           Neuron.Connections[i].NextIncrease += Neuron.Connections[i].Weight * Neuron.Connections[i].NeuronB.errorMarginValue * this.NeuralNetworkSettings.LearnFactor * OPT_len_Value
+           Neuron.Bias += Neuron.Connections[i].NeuronB.errorMarginValue * this.NeuralNetworkSettings.LearnFactor * OPT_len_Value
          }
        }
       }
